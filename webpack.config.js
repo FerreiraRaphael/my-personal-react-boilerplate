@@ -8,30 +8,48 @@ const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
 });
 
 module.exports = {
-  entry: './src/index.js',
+  entry: {
+    'app': [
+      'babel-polyfill',
+      'react-hot-loader/patch',
+      './src/index'
+    ]
+ },
   output: {
     path: path.resolve('dist'),
     filename: 'index_bundle.js'
   },
   module: {
-    // loaders: [
-    //   { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },
-    //   { test:   /\.jsx$/, loader: 'babel-loader', exclude: /node_modules/ },
-    //   { test: /\.scss$/, loaders: [ 'style-loader', 'css-loader', 'sass-loader' ] }
-    // ]
-    rules: [
+    loaders: [
       {
-        test: '/\jsx?$/',
+        test: /\.jsx?$/,
         loader: 'babel-loader',
-        include: path.resolve(__dirname, '../src')
+        exclude: /node_modules/
+      },
+      {
+        test: /\.css$/,
+        use: [
+          {
+            loader: 'style-loader'
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: true,
+              importLoaders: 1,
+              module: true,
+              localIdentName: '[name]-[local]-[hash:base64:5]'
+              // localIdentName: isDebug ? '[name]-[local]-[hash:base64:5]' : '[hash:base64:5]'
+            }
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              sourceMap: 'inline'
+            }
+          }
+        ]
       }
-      // {
-      //   test: /\.scss$/,
-      //   use: [
-      //     {
-      //
-      //     }'style-loader', 'css-loader', 'sass-loader' ]
-      // }
     ]
   },
   plugins: [HtmlWebpackPluginConfig]
