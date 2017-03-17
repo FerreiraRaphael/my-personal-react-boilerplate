@@ -39,6 +39,33 @@
     "webpack": "^2.2.1",
     "webpack-dev-server": "^2.4.2"
   },
+  "babel": {
+    "presets": [
+      "es2015", "react"
+    ]
+  },
+  "eslintConfig": {
+    "extends": [
+      "standard",
+      "standard-react"
+    ],
+    "plugins": [
+      "react",
+      "promise"
+    ],
+    "env": {
+      "browser": true
+    },
+    "rules": {
+      "key-spacing"           : 0,
+      "jsx-quotes"            : [2, "prefer-single"],
+      "max-len"               : [2, 120, 2],
+      "object-curly-spacing"  : [2, "always"]
+    }
+  },
+  "stylelint": {
+    "extends": "stylelint-config-standard"
+  },
   "precommit": "lint:staged",
   "lint-staged": {
     "*.{cmd,html,json,md,sh.txt,xml,yml}": [
